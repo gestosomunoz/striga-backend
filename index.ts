@@ -1,25 +1,27 @@
 import express, { Express, Request, Response, Router } from 'express';
 import dotenv from 'dotenv';
-import { defaultRoute } from './routes/defaultRoute';
 import bodyParser from 'body-parser';
-import { pingRoute } from './routes/pingRoute';
-import { getExchangeRoute } from './routes/getExchangeRoute';
+import { tradeRequestHandler } from './request_handlers/tradeRequestHandler';
 import cors from 'cors';
+import { transactionRequestHandler } from './request_handlers/transactionRequestHandler';
 
 dotenv.config();
 
 const app: Express = express();
-export const router = express.Router();
-const port = process.env.PORT;
-
-router.use(defaultRoute);
-router.use(pingRoute);
-router.use(getExchangeRoute);
+const router = express.Router();
 
 app.use(cors());
-app.use('/', router);
+
+
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+router.use('/trade', tradeRequestHandler);
+router.use('/transaction', transactionRequestHandler);
+
+app.use('/', router);
+
+const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`[server]: Serverr is running at http://localhost:${port}`);

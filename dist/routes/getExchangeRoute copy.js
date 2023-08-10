@@ -21,6 +21,13 @@ exports.getExchangeRoute = (0, express_1.Router)();
 exports.getExchangeRoute.get('/trade/exchange/:currency', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const currency = req.params.currency;
     const rates = yield (0, striga_adapter_1.getExchangeRates)();
-    console.log(rates[currency]);
-    res.json(rates);
+    const topup = (0, striga_adapter_1.topupAccount)();
+    //console.log(topup);
+    topup
+        .then((data) => console.log(data))
+        .catch((err) => {
+        //console.log("ERROR LUIS");
+        console.error(err);
+    });
+    res.json(rates[currency]); // Send the response data from the external API to the client
 }));

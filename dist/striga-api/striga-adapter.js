@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getExchangeRates = void 0;
+exports.getTransactionState = exports.topupAccount = exports.getExchangeRates = void 0;
 const axios_1 = __importDefault(require("axios"));
 const strigaUtils_1 = require("./strigaUtils");
 const baseUrl = 'https://www.sandbox.striga.com/api/v1';
@@ -39,3 +39,41 @@ function getExchangeRates() {
     });
 }
 exports.getExchangeRates = getExchangeRates;
+function topupAccount(amount) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = process.env.USER_ID;
+        const accountId = process.env.ACCOUNT_ID;
+        const satoshis = Math.floor(100000000 * amount);
+        const body = {
+            userId: userId,
+            accountId: accountId,
+            amount: satoshis.toString(),
+            ttl: 10
+        };
+        return callApi('/wallets/account/lightning/topup', body, 'POST');
+    });
+}
+exports.topupAccount = topupAccount;
+function getTransactionState(transactionId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = process.env.USER_ID;
+        const accountId = process.env.ACCOUNT_ID;
+        const body = {
+            userId: userId,
+            accountId: accountId,
+            txId: transactionId
+        };
+        const response = yield callApi('/wallets/account/get-transactions-by-id', body, 'POST');
+        if (response.data && response.data.transactions && response.data.count > 1) {
+            const transaction = response.data.transactions[0];
+            if (transaction.txType === 'LN_INCOMING_CONFIRMED') {
+                return { status: 'PAID' };
+            }
+            if (transaction.txType === 'LN_INCOMING_EXPIRED') {
+                return { status: 'EXPIRED' };
+            }
+        }
+        return { status: 'OPEN' };
+    });
+}
+exports.getTransactionState = getTransactionState;

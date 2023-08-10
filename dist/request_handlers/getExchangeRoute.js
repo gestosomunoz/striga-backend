@@ -12,15 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getExchangeRoute = void 0;
+exports.tradeRequestHandler = void 0;
 const express_1 = require("express");
 const dotenv_1 = __importDefault(require("dotenv"));
 const striga_adapter_1 = require("../striga-api/striga-adapter");
 dotenv_1.default.config();
-exports.getExchangeRoute = (0, express_1.Router)();
-exports.getExchangeRoute.get('/trade/exchange/:currency', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.tradeRequestHandler = (0, express_1.Router)();
+exports.tradeRequestHandler.get('/exchange/:currency', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const currency = req.params.currency;
     const rates = yield (0, striga_adapter_1.getExchangeRates)();
     console.log(rates[currency]);
-    res.json(rates);
+    res.json(rates[currency]);
 }));
