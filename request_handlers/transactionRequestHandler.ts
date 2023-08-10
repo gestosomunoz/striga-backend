@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import dotenv from 'dotenv';
 
-import { getTransactionState, topupAccount } from '../striga-api/striga-adapter';
 import { TransactionController } from '../controllers/TransactionController';
 
 dotenv.config();

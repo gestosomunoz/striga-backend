@@ -3,9 +3,10 @@ import { CryptoProviderFactory } from "../crypto_service/CryptoProviderFactory";
 
 export class TradeController {
     private static instance: TradeController | null = null;
-
+    private cryptoProvider: CryptoProvider;
     private constructor() {
         // Private constructor to prevent direct instantiation
+        this.cryptoProvider = CryptoProviderFactory.getCryptoService();
     }
 
     public static getInstance(): TradeController {
@@ -16,8 +17,8 @@ export class TradeController {
     }
     
     public async getExchangeRates(currency: string): Promise<any> {
-        const cryptoProvider = CryptoProviderFactory.getCryptoService();
-        const rates = await cryptoProvider.getExchangeRates();
+        
+        const rates = await this.cryptoProvider.getExchangeRates();
         return rates[currency];
     }
 }

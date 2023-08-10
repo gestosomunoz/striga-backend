@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import dotenv from 'dotenv';
 
-import { getExchangeRates } from '../striga-api/striga-adapter';
 import { TradeController } from '../controllers/TradeController';
 
 dotenv.config();

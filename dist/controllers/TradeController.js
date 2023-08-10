@@ -14,6 +14,7 @@ const CryptoProviderFactory_1 = require("../crypto_service/CryptoProviderFactory
 class TradeController {
     constructor() {
         // Private constructor to prevent direct instantiation
+        this.cryptoProvider = CryptoProviderFactory_1.CryptoProviderFactory.getCryptoService();
     }
     static getInstance() {
         if (TradeController.instance === null) {
@@ -23,8 +24,7 @@ class TradeController {
     }
     getExchangeRates(currency) {
         return __awaiter(this, void 0, void 0, function* () {
-            const cryptoProvider = CryptoProviderFactory_1.CryptoProviderFactory.getCryptoService();
-            const rates = yield cryptoProvider.getExchangeRates();
+            const rates = yield this.cryptoProvider.getExchangeRates();
             return rates[currency];
         });
     }
