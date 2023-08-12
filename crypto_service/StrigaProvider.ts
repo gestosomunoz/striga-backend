@@ -69,8 +69,8 @@ export class StrigaProvider implements CryptoProvider {
             txId: transactionId
         } 
         const response = await this.callApi('/wallets/account/get-transactions-by-id', body, 'POST');
-        if (response.data && response.data.transactions && response.data.count > 1) {
-            const transaction = response.data.transactions[0];
+        if (response && response.transactions && response.count > 0) {
+            const transaction = response.transactions[0];
             if (transaction.txType === 'LN_INCOMING_CONFIRMED') {
                 return { transactionState: 'PAID'}
             }
