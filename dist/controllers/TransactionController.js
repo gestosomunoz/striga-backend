@@ -9,17 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TransactionController = void 0;
 const CryptoProviderFactory_1 = require("../crypto_service/CryptoProviderFactory");
 class TransactionController {
     constructor() {
         this.cryptoProvider = CryptoProviderFactory_1.CryptoProviderFactory.getCryptoService();
-    }
-    static getInstance() {
-        if (TransactionController.instance === null) {
-            TransactionController.instance = new TransactionController();
-        }
-        return TransactionController.instance;
     }
     topupAccount(amount) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -34,5 +27,5 @@ class TransactionController {
         });
     }
 }
-exports.TransactionController = TransactionController;
-TransactionController.instance = null;
+const transactionController = new TransactionController();
+exports.default = transactionController;

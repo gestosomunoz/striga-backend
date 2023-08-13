@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import dotenv from 'dotenv';
+import tradeController from '../controllers/TradeController';
 
-import { TradeController } from '../controllers/TradeController';
 
 dotenv.config();
 
@@ -10,7 +10,7 @@ export const tradeRequestHandler = Router();
 tradeRequestHandler.get('/exchange/:currency', async (req, res) => {
   const currency = req.params.currency;
 
-  const rates = await TradeController.getInstance().getExchangeRates(currency);
+  const rates = await tradeController.getExchangeRates(currency);
   console.log('Exchange rates for ' + currency, rates);
   res.json(rates); 
 });

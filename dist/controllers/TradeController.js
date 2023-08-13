@@ -9,18 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TradeController = void 0;
 const CryptoProviderFactory_1 = require("../crypto_service/CryptoProviderFactory");
 class TradeController {
     constructor() {
-        // Private constructor to prevent direct instantiation
         this.cryptoProvider = CryptoProviderFactory_1.CryptoProviderFactory.getCryptoService();
-    }
-    static getInstance() {
-        if (TradeController.instance === null) {
-            TradeController.instance = new TradeController();
-        }
-        return TradeController.instance;
     }
     getExchangeRates(currency) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -29,5 +21,5 @@ class TradeController {
         });
     }
 }
-exports.TradeController = TradeController;
-TradeController.instance = null;
+const tradeController = new TradeController();
+exports.default = tradeController;

@@ -42,6 +42,7 @@ export class StrigaProvider implements CryptoProvider {
         return apiResponse;
 
     }
+    
     public async topupAccount(amount: number): Promise<TopupResponse> {
         const userId = process.env.USER_ID!;
         const accountId = process.env.ACCOUNT_ID!;
@@ -60,6 +61,7 @@ export class StrigaProvider implements CryptoProvider {
         }
 
     }
+
     public async getTransactionState(transactionId: string): Promise<TransactionStateResponse> {
         const userId = process.env.USER_ID!;
         const accountId = process.env.ACCOUNT_ID!;
@@ -80,5 +82,4 @@ export class StrigaProvider implements CryptoProvider {
         }
         return { transactionState: 'OPEN'}
     }
-
-} 
+}

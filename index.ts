@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import { tradeRequestHandler } from './request_handlers/tradeRequestHandler';
 import cors from 'cors';
 import { transactionRequestHandler } from './request_handlers/transactionRequestHandler';
+import { accountRequestHandler } from './request_handlers/accountRequestHandler';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 router.use('/trade', tradeRequestHandler);
 router.use('/transaction', transactionRequestHandler);
+router.use('/account', accountRequestHandler);
 
 app.use('/', router);
 

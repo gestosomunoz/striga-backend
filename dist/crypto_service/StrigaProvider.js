@@ -82,7 +82,6 @@ class StrigaProvider {
                 txId: transactionId
             };
             const response = yield this.callApi('/wallets/account/get-transactions-by-id', body, 'POST');
-            console.log(response);
             if (response && response.transactions && response.count > 0) {
                 const transaction = response.transactions[0];
                 if (transaction.txType === 'LN_INCOMING_CONFIRMED') {

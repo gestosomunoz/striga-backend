@@ -12,15 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tradeRequestHandler = void 0;
+exports.accountRequestHandler = void 0;
 const express_1 = require("express");
 const dotenv_1 = __importDefault(require("dotenv"));
-const TradeController_1 = __importDefault(require("../controllers/TradeController"));
 dotenv_1.default.config();
-exports.tradeRequestHandler = (0, express_1.Router)();
-exports.tradeRequestHandler.get('/exchange/:currency', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const currency = req.params.currency;
-    const rates = yield TradeController_1.default.getExchangeRates(currency);
-    console.log('Exchange rates for ' + currency, rates);
-    res.json(rates);
+exports.accountRequestHandler = (0, express_1.Router)();
+exports.accountRequestHandler.get('/balance', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //const balance = await TradeController.getInstance().get(currency);
+    //console.log('Account balance: ', balance);
+    res.json('TODO');
 }));

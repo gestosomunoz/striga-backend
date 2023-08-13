@@ -9,6 +9,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const tradeRequestHandler_1 = require("./request_handlers/tradeRequestHandler");
 const cors_1 = __importDefault(require("cors"));
 const transactionRequestHandler_1 = require("./request_handlers/transactionRequestHandler");
+const accountRequestHandler_1 = require("./request_handlers/accountRequestHandler");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const router = express_1.default.Router();
@@ -17,6 +18,7 @@ app.use(body_parser_1.default.json({ limit: '50mb', type: 'application/json' }))
 app.use(body_parser_1.default.urlencoded({ limit: '50mb', extended: true }));
 router.use('/trade', tradeRequestHandler_1.tradeRequestHandler);
 router.use('/transaction', transactionRequestHandler_1.transactionRequestHandler);
+router.use('/account', accountRequestHandler_1.accountRequestHandler);
 app.use('/', router);
 const port = process.env.PORT;
 app.listen(port, () => {
