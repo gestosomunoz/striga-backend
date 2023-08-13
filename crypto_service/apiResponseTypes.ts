@@ -20,3 +20,7 @@ export type TransactionState = "PAID" | "OPEN" | "EXPIRED";
 export interface TransactionStateResponse {
     transactionState: TransactionState
 }
+
+export interface AccountBalanceResponse {
+    balance: number;
+}

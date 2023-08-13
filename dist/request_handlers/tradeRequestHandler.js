@@ -21,6 +21,5 @@ exports.tradeRequestHandler = (0, express_1.Router)();
 exports.tradeRequestHandler.get('/exchange/:currency', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const currency = req.params.currency;
     const rates = yield TradeController_1.default.getExchangeRates(currency);
-    console.log('Exchange rates for ' + currency, rates);
     res.json(rates);
 }));

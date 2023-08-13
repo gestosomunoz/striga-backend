@@ -36,11 +36,9 @@ exports.transactionRequestHandler.post('/:transactionId', (req, res) => __awaite
     const transactionId = req.params.transactionId;
     try {
         const state = yield TransactionController_1.default.getTransactionState(transactionId);
-        console.log(state);
         res.json(state);
     }
     catch (error) {
-        console.log(error);
         res.status(500).json({ error: 'Internal server error' });
     }
 }));

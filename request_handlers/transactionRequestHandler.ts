@@ -28,10 +28,8 @@ transactionRequestHandler.post('/:transactionId', async (req, res) => {
   try {
 
     const state = await transactionController.getTransactionState(transactionId);
-    console.log(state);
     res.json(state);
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error: 'Internal server error' });
   }
 });

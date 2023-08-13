@@ -1,10 +1,12 @@
 import axios from "axios";
 import { CryptoProvider } from "./CryptoProvider";
-import { ExchangeRatesResponse, TopupResponse, TransactionStateResponse } from "./apiResponseTypes";
+import { AccountBalanceResponse, ExchangeRatesResponse, TopupResponse, TransactionStateResponse } from "./ApiResponseTypes";
 import crypto from 'crypto'
 
 export class StrigaProvider implements CryptoProvider {
     private baseUrl: string = 'https://www.sandbox.striga.com/api/v1';
+    private BTCtoSatoshiRate = 100000000;
+    private transactionTTL = 10;
 
     private getAuthHeader(body: any, path: string, method: string): string {
         const hmac = crypto.createHmac('sha256', process.env.API_SECRET!);
@@ -42,16 +44,16 @@ export class StrigaProvider implements CryptoProvider {
         return apiResponse;
 
     }
-    
+
     public async topupAccount(amount: number): Promise<TopupResponse> {
         const userId = process.env.USER_ID!;
         const accountId = process.env.ACCOUNT_ID!;
-        const satoshis = Math.floor(100000000 * amount);
+        const satoshis = Math.floor(this.BTCtoSatoshiRate * amount);
         const body = {
             userId: userId,
             accountId: accountId,
             amount: satoshis.toString(),
-            ttl: 10
+            ttl: this.transactionTTL
         }
         const response = await this.callApi('/wallets/account/lightning/topup', body, 'POST');
         return {
@@ -81,5 +83,18 @@ export class StrigaProvider implements CryptoProvider {
             }
         }
         return { transactionState: 'OPEN'}
+    }
+
+    public async getAccountBalance(): Promise<AccountBalanceResponse> {
+        const userId = process.env.USER_ID!;
+        const accountId = process.env.ACCOUNT_ID!;
+        const body = {
+            userId: userId,
+            accountId: accountId
+        } 
+        const response = await this.callApi('/wallets/get/account', body, 'POST');
+        return {
+            balance: response.availableBalance.amount / this.BTCtoSatoshiRate
+        }
     }
 }

@@ -18,6 +18,8 @@ const crypto_1 = __importDefault(require("crypto"));
 class StrigaProvider {
     constructor() {
         this.baseUrl = 'https://www.sandbox.striga.com/api/v1';
+        this.BTCtoSatoshiRate = 100000000;
+        this.transactionTTL = 10;
     }
     getAuthHeader(body, path, method) {
         const hmac = crypto_1.default.createHmac('sha256', process.env.API_SECRET);
@@ -57,12 +59,12 @@ class StrigaProvider {
         return __awaiter(this, void 0, void 0, function* () {
             const userId = process.env.USER_ID;
             const accountId = process.env.ACCOUNT_ID;
-            const satoshis = Math.floor(100000000 * amount);
+            const satoshis = Math.floor(this.BTCtoSatoshiRate * amount);
             const body = {
                 userId: userId,
                 accountId: accountId,
                 amount: satoshis.toString(),
-                ttl: 10
+                ttl: this.transactionTTL
             };
             const response = yield this.callApi('/wallets/account/lightning/topup', body, 'POST');
             return {
@@ -92,6 +94,20 @@ class StrigaProvider {
                 }
             }
             return { transactionState: 'OPEN' };
+        });
+    }
+    getAccountBalance() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userId = process.env.USER_ID;
+            const accountId = process.env.ACCOUNT_ID;
+            const body = {
+                userId: userId,
+                accountId: accountId
+            };
+            const response = yield this.callApi('/wallets/get/account', body, 'POST');
+            return {
+                balance: response.availableBalance.amount / this.BTCtoSatoshiRate
+            };
         });
     }
 }

@@ -11,6 +11,5 @@ tradeRequestHandler.get('/exchange/:currency', async (req, res) => {
   const currency = req.params.currency;
 
   const rates = await tradeController.getExchangeRates(currency);
-  console.log('Exchange rates for ' + currency, rates);
   res.json(rates); 
 });
