@@ -40,7 +40,7 @@ export class StrigaProvider implements CryptoProvider {
             const response = await axios(config);
             return response.data;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : ''
+            const errorMessage = error instanceof Error ? error.message : '';
             throw new APIError(
                 500,
                 'Error calling API ' + errorMessage,

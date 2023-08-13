@@ -7,7 +7,7 @@ dotenv.config();
 
 export const transactionRequestHandler = Router();
 
-transactionRequestHandler.post('/topup', async (req, res) => {
+transactionRequestHandler.post('/topup', async (req, res, next) => {
   try {
     if (!req.body.hasOwnProperty('amount')) {
       return res.status(400).json({ error: 'Missing amount in request body' });
@@ -18,18 +18,16 @@ transactionRequestHandler.post('/topup', async (req, res) => {
     const topup = await transactionController.topupAccount(amount);
     res.json(topup);
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Internal server error' });
+    next(error)
   }
 });
 
-transactionRequestHandler.post('/:transactionId', async (req, res) => {
-  const transactionId = req.params.transactionId;
+transactionRequestHandler.post('/:transactionId', async (req, res, next) => {
   try {
-
+    const transactionId = req.params.transactionId;
     const state = await transactionController.getTransactionState(transactionId);
     res.json(state);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    next(error)
   }
 });

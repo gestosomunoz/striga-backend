@@ -8,7 +8,6 @@ class AccountController {
     }
     
     public async getCurrentBalance(): Promise<any> {
-        
         const balance = await this.cryptoProvider.getAccountBalance();
         return balance;
     }

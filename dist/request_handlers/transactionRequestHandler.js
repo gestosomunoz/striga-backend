@@ -18,7 +18,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const TransactionController_1 = __importDefault(require("../controllers/TransactionController"));
 dotenv_1.default.config();
 exports.transactionRequestHandler = (0, express_1.Router)();
-exports.transactionRequestHandler.post('/topup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.transactionRequestHandler.post('/topup', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!req.body.hasOwnProperty('amount')) {
             return res.status(400).json({ error: 'Missing amount in request body' });
@@ -28,17 +28,16 @@ exports.transactionRequestHandler.post('/topup', (req, res) => __awaiter(void 0,
         res.json(topup);
     }
     catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Internal server error' });
+        next(error);
     }
 }));
-exports.transactionRequestHandler.post('/:transactionId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const transactionId = req.params.transactionId;
+exports.transactionRequestHandler.post('/:transactionId', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const transactionId = req.params.transactionId;
         const state = yield TransactionController_1.default.getTransactionState(transactionId);
         res.json(state);
     }
     catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        next(error);
     }
 }));

@@ -6,8 +6,11 @@ dotenv.config();
 
 export const accountRequestHandler = Router();
 
-accountRequestHandler.get('/balance', async (req, res) => {
-
-  const balance = await accountController.getCurrentBalance();
-  res.json(balance);
+accountRequestHandler.get('/balance', async (req, res, next) => {
+  try {
+    const balance = await accountController.getCurrentBalance();
+    res.json(balance);
+  } catch (error) {
+    next(error)
+  }
 });

@@ -8,22 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.accountRequestHandler = void 0;
-const express_1 = require("express");
-const dotenv_1 = __importDefault(require("dotenv"));
-const AccountController_1 = __importDefault(require("../controllers/AccountController"));
-dotenv_1.default.config();
-exports.accountRequestHandler = (0, express_1.Router)();
-exports.accountRequestHandler.get('/balance', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const balance = yield AccountController_1.default.getCurrentBalance();
-        res.json(balance);
-    }
-    catch (error) {
-        next(error);
-    }
-}));
+exports.handleErrors = void 0;
+function handleErrors(req, res, next, callback) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            callback(req, res, next);
+        }
+        catch (error) {
+            next(error);
+        }
+    });
+}
+exports.handleErrors = handleErrors;
