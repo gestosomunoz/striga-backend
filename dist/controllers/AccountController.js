@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CryptoProviderFactory_1 = require("../crypto_service/CryptoProviderFactory");
+const CryptoProviderFactory_1 = require("../crypto_provider/CryptoProviderFactory");
 class AccountController {
     constructor() {
         this.cryptoProvider = CryptoProviderFactory_1.CryptoProviderFactory.getCryptoService();

@@ -5,6 +5,7 @@ import { tradeRequestHandler } from './request_handlers/tradeRequestHandler';
 import cors from 'cors';
 import { transactionRequestHandler } from './request_handlers/transactionRequestHandler';
 import { accountRequestHandler } from './request_handlers/accountRequestHandler';
+import { errorHandler } from './middleware/ErrorHandler';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ router.use('/transaction', transactionRequestHandler);
 router.use('/account', accountRequestHandler);
 
 app.use('/', router);
+app.use(errorHandler);
 
 const port = process.env.PORT;
 

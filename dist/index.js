@@ -10,6 +10,7 @@ const tradeRequestHandler_1 = require("./request_handlers/tradeRequestHandler");
 const cors_1 = __importDefault(require("cors"));
 const transactionRequestHandler_1 = require("./request_handlers/transactionRequestHandler");
 const accountRequestHandler_1 = require("./request_handlers/accountRequestHandler");
+const ErrorHandler_1 = require("./middleware/ErrorHandler");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const router = express_1.default.Router();
@@ -20,6 +21,7 @@ router.use('/trade', tradeRequestHandler_1.tradeRequestHandler);
 router.use('/transaction', transactionRequestHandler_1.transactionRequestHandler);
 router.use('/account', accountRequestHandler_1.accountRequestHandler);
 app.use('/', router);
+app.use(ErrorHandler_1.errorHandler);
 const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);

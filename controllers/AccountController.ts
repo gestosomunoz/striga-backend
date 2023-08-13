@@ -1,5 +1,5 @@
-import { CryptoProvider } from "../crypto_service/CryptoProvider";
-import { CryptoProviderFactory } from "../crypto_service/CryptoProviderFactory";
+import { CryptoProvider } from "../crypto_provider/CryptoProvider";
+import { CryptoProviderFactory } from "../crypto_provider/CryptoProviderFactory";
 
 class AccountController {
     private cryptoProvider: CryptoProvider;

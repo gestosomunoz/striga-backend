@@ -18,8 +18,13 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const TradeController_1 = __importDefault(require("../controllers/TradeController"));
 dotenv_1.default.config();
 exports.tradeRequestHandler = (0, express_1.Router)();
-exports.tradeRequestHandler.get('/exchange/:currency', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const currency = req.params.currency;
-    const rates = yield TradeController_1.default.getExchangeRates(currency);
-    res.json(rates);
+exports.tradeRequestHandler.get('/exchange/:currency', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const currency = req.params.currency;
+        const rates = yield TradeController_1.default.getExchangeRates(currency);
+        res.json(rates);
+    }
+    catch (error) {
+        next(error);
+    }
 }));
