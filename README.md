@@ -1,7 +1,7 @@
 # Striga test backend
 
 ## Technologies
-I have decided not to use a big framework for this project. Since it's the first time I'm working with a typescript backend, I've decided not to use frameworks like NestJS to get used to the underlying technologies that they use, like Express.
+I have decided not to use a big framework for this project. Since it's the first time I'm working with a typescript backend, I've decided not to use frameworks like NestJS to learn the underlying technologies that they use, like Express. This provides a faster onboarding a better understanding of the details.
 
 ## Project structure
 
@@ -14,3 +14,5 @@ The service is divided in three layers:
 * API access/providers: call the external API
 
 For the API providers I have created a factory to abstract the implementation from the rest of the app. This factory currently returns an instance of `StrigaProvider`, but in the future we could migrate to a new provider or use different ones depending on the context.
+
+The user and account IDs are hardcoded in `.env` because the requirements were to simplify and focus on the three screens.
